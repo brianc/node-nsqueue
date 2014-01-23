@@ -98,3 +98,4 @@ describe('responding to messages', function() {
     client.publish(topic, 'test')
   })
 })
+
