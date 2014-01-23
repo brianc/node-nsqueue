@@ -1,0 +1,19 @@
+{
+  "name": "node-nsqueue",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "mocha": "~1.17.0",
+    "okay": "~0.3.0",
+    "request": "~2.33.0"
+  },
+  "dependencies": {
+    "packet-reader": "0.0.0"
+  }
+}
