@@ -1,6 +1,7 @@
-var Connection = require('./lib/Connection')
 var connect = module.exports = function(options) {
-  return new Connection(options)
+  return new module.exports.Client(options)
 }
-connect.Connection = Connection
-connect.Client = require('./lib/client')
+
+//export direct Client & Connection constructors
+module.exports.Connection = require('./lib/Connection')
+module.exports.Client = require('./lib/Client')

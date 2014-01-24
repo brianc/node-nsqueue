@@ -1,13 +1,13 @@
 {
   "name": "node-nsqueue",
-  "version": "0.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "node.js client for nsq",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha"
   },
-  "author": "",
-  "license": "BSD-2-Clause",
+  "author": "Brian M. Carlson",
+  "license": "MIT",
   "devDependencies": {
     "mocha": "~1.17.0",
     "okay": "~0.3.0",
