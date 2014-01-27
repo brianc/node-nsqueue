@@ -1,3 +1,4 @@
+var assert = require('assert')
 var nsqueue = require('../')
 var helper = require('./helper')
 var ok = require('okay')
@@ -24,6 +25,16 @@ describe('disconnection', function() {
     connection.SUB(topic, 'test')
     connection.once('response', function() {
       connection.end(done)
+    })
+  })
+})
+
+describe('ending client', function() {
+  var topic = helper.client()
+  it('can disconnect', function(done) {
+    var client = this.client
+    client.subscribe(topic, 'test', function() {
+      client.end(done)
     })
   })
 })

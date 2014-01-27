@@ -12,8 +12,11 @@ describe('client', function() {
     client.publish(topic, Buffer('hi', 'ascii'), ok(done, function(){}))
     client.subscribe(topic, 'test', ok(done, function() {
       client.once('message', function(msg) {
+        assert.strictEqual(msg.responded, false)
         msg.requeue(100)
+        assert.strictEqual(msg.responded, true)
         client.once('message', function(msg) {
+          assert.strictEqual(msg.responded, false)
           assert.equal(msg.data.toString(), 'hi')
           msg.requeue(100)
           done()
@@ -29,6 +32,7 @@ describe('client', function() {
     var client = this.client
     client.once('message', function(msg) {
       msg.touch()
+      assert.strictEqual(msg.responded, false)
       done()
     })
   })
