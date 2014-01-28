@@ -150,9 +150,11 @@ A helper which calls `JSON.parse(message.data.toString('utf8'))` and returns the
 
 _note:_ calling this on a message which has non-valid JSON contents will throw a json parsing exception.
 
-#### message.finish()
+#### message.finish() : bool
 
 Call this when you're done processing the message.  Tells the nsqd server process you have successfully finished processing this message.  The server will remove this message from the queue and not send it out to any more clients.
+
+Returns `true` if the response was sent to the nsqd server.  If the message has already been responded to -- it is no longer `.inFlight == true` -- then this is a no-op and returns false.`
 
 If there is an error finishing this message, the client will emit an `error` event.
 
@@ -164,6 +166,8 @@ __timeoutInMilliseconds: int__ millisecond timeout the nsqd server will wait bef
 
 Signals the nsqd server to requeue the message and deliver it again.  You usually call this if the message consumer has failed to process the message appropriately.
 
+Returns `true` if the response was sent to the nsqd server.  If the message has already been responded to -- it is no longer `.inFlight == true` -- then this is a no-op and returns false.
+
 If there is a problem requeuing this message, the client will emit an `error` event.
 
 _note:_ currently the binary protocol does not communicate anything back in the event of a successful `REQ` message.  There's no way to have a callback for `message.requeue(1000)` at this time -- it's fire and forget.
@@ -174,27 +178,23 @@ Signal the nsqd server you want more time to process this message.
 
 _note:_ currently the binary protocol does not communicate anything back in the event of a successful `TOUCH` message.  There's no way to have a callback for `message.touch()` at this time -- it's fire and forget.
 
-#### message.responded: bool
+#### message.inFlight: bool
 
-Initially set to `false`. This will be set this to `true` after calling `message.finish()` or `message.requeu()`.
+Initially set to `true`. This will be set this to `false` after calling `message.finish()` or `message.requeu()`.
 
-_note:_ it is currently considered an error for a client to respond to a message more than once.  Calling `message.finish()` or `message.requeue()` more than once on a message will result in the client emitting an error, so it is best to check `message.responded` if you're unsure.
+_note:_ it is currently considered an error for a client to respond to a message more than once, so calling `message.finish()` or `message.requeue()` more than once on a message will only send the `FIN` or `REQ` packet to the nsqd server __once__ for each message.  If you absolutely must send `FIN` or `REQ` twice (which will usually cause the nsqueue client to emit an error) then you have to manually toggle `message.inFlight = true` before calling `message.finish()` or `message.requeue()`
+again.
 
 ```js
 client.on('message', function(msg) {
-  console.log(msg.responded) //false
-  msg.finish()
-  console.log(msg.responded) //true
+  console.log(msg.inFlight) //true
+  var actuallyResponded = msg.finish()
+  console.log(actuallyResponded) //true
+  console.log(msg.inFlight) //false
 
-  //don't do this:
-  msg.finish() //client will soon emit an `error` event saying the message as already handled
-  //or this:
-  msg.requeue(100)
-
-  //do this instead:
-  if(!msg.responded) {
-    msg.finish()
-  }
+  //lets try sending a `REQ` packet for this message
+  var actuallyRespondedAgain = msg.requeue(1000)
+  console.log(actuallyRespondedAgain) //false
 })
 ```
 

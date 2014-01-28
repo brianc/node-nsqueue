@@ -80,22 +80,3 @@ describe('client publish multiple', function() {
   })
 })
 
-describe('responding to messages', function() {
-  var topic = helper.client()
-  it('will indicate it has already been responeded to', function(done) {
-    var client = this.client
-    client.subscribe(topic)
-    client.on('message', function(msg) {
-      assert.equal(msg.data.toString(), 'test')
-      msg.finish()
-      assert.strictEqual(msg.responded, true, 'msg should have responded === true')
-      msg.finish()
-      client.once('error', function(err) {
-        assert(err.message.indexOf('E_FIN_FAILED') > -1, 'Error should contain E_FIN_FAILED message')
-        done()
-      })
-    })
-    client.publish(topic, 'test')
-  })
-})
-
