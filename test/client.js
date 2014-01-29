@@ -49,6 +49,25 @@ describe('client', function() {
     })
   })
 
+  describe('topic error tests', function() {
+    var topic = helper.client()
+    it('will handle publish error due to queue name in callback', function(done) {
+      this.client.publish('', {test: true}, function(err) {
+        assert(err)
+        done()
+      })
+    })
+  })
+
+  describe('message error tests', function() {
+    var topic = helper.client()
+    it('will handle publish error due to null message in callback', function(done) {
+      this.client.publish(topic, Buffer(0), function(err) {
+        assert(err)
+        done()
+      })
+    })
+  })
 })
 
 describe('client publish multiple', function() {
