@@ -48,6 +48,7 @@ describe('client', function() {
       done()
     })
   })
+
 })
 
 describe('client publish multiple', function() {
