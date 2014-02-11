@@ -1,6 +1,6 @@
 # nsqueue
 
-Simple, well-tested node client for nsqd.  nslookupd smarts not included.
+Simple, well-tested node client for [nsqd](https://github.com/bitly/nsq).  nslookupd smarts not included (yet).
 
 ## install
 
