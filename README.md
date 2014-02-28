@@ -198,6 +198,10 @@ client.on('message', function(msg) {
 })
 ```
 
+## testing
+
+Most of the test are functional style tests. They assume a running instance of nsqd on `localhost:4150`. Once you have nsqd reachable at `localhost:4150` run the tests by typing `mocha` at the project root.
+
 ## contributions
 
 I love contributions! Fork & send pull requests please!  After a few pull requests I can add you as a contributor with push & pull acess if you're interested.  If you find any problems or want to undertake more advanced/crazy refactorings please feel free to open an issue and we can discuss.

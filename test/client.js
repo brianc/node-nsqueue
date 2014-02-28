@@ -3,6 +3,7 @@ var Client = require('../').Client
 var helper = require('./helper')
 var assert = require('assert')
 var ok = require('okay')
+var request = require('request')
 
 describe('client', function() {
   var topic = helper.client()
@@ -100,3 +101,23 @@ describe('client publish multiple', function() {
   })
 })
 
+describe('connection callback', function() {
+  var topic = 'test-topic-' + Date.now()
+
+  after(function(done) {
+    request.get('http://localhost:4151/delete_topic?topic=' + topic, done)
+  })
+
+  it('is called once only', function(done) {
+    var client = this.client = new Client(helper.options())
+    var callCount = 0
+    client.connect(function() {
+      assert.equal(callCount++, 0)
+      client.publishAll(topic, ['test', 'test', 'test'], function() {
+      client.publishAll(topic, ['test', 'test', 'test'], function() {
+        setTimeout(done, 1000)
+      })
+      })
+    })
+  })
+})

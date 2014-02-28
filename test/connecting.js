@@ -5,15 +5,30 @@ var ok = require('okay')
 
 describe('connection', function() {
   it('calls back on success', function(done) {
-    var options = {
-      port: 4150,
-      host: 'localhost'
-    }
-    nsqueue(options).connect(done)
+    nsqueue(helper.options()).connect(done)
   })
 
   it('connects from helper', function(done) {
     helper.connect(done)
+  })
+})
+
+describe('connection without callback', function() {
+  it('works', function(done) {
+    var client = nsqueue(helper.options())
+    client.connect()
+    setTimeout(function() {
+      client.end()
+    }, 100)
+  })
+
+  it('emits error', function(done) {
+    var client = nsqueue({host: 'asdfalsdkfjsdf', port: 1})
+    client.connect()
+    client.on('error', function(e) {
+      assert(e, 'should have received an error argument on connection failure')
+      done()
+    })
   })
 })
 
