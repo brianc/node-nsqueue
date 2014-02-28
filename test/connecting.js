@@ -14,7 +14,11 @@ describe('connection', function() {
 })
 
 describe('connection without callback', function() {
-  it('works', function(done) {
+  //need to split out end() and close()
+  //end() - end the socket hard
+  //close() - send CLS and keep socket open
+  //also use --no-exit flag
+  it('works', false, function(done) {
     var client = nsqueue(helper.options())
     client.connect()
     setTimeout(function() {
