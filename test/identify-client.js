@@ -10,8 +10,7 @@ describe('client.identify', function() {
       short_id: 'hi',
       long_id: 'hello!',
       feature_negotiation: true,
-      heartbeat_interval: -1,
-      tls_v1: true
+      heartbeat_interval: -1
     }
     this.client.identify(options, function(err, res) {
       assert.ifError(err)

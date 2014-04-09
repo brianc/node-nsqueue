@@ -70,6 +70,7 @@ describe('message', function() {
   })
 
   it('can be requeued multiple times without error', function(done) {
+    this.timeout(10000)
     this.client.once('message', function(msg) {
       assert.equal(msg.inFlight, true)
       assert.equal(msg.requeue(100), true)

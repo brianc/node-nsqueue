@@ -4,7 +4,7 @@
   "description": "node.js client for nsq",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha"
+    "test": "make test-linux"
   },
   "author": "Brian M. Carlson",
   "license": "MIT",

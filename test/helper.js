@@ -24,10 +24,16 @@ var helper = module.exports = {
     }
     request.post(options, cb)
   },
-  client: function() {
+  client: function(config) {
     var topic = 'test-topic-' + Date.now()
     before(function(done) {
-      var client = this.client = new Client(helper.options())
+      var options = helper.options()
+      if(config) {
+        for(var key in config) {
+          options[key] = config[key]
+        }
+      }
+      var client = this.client = new Client(options)
       client.connect(done)
     })
 
