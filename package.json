@@ -1,6 +1,6 @@
 {
   "name": "nsqueue",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "node.js client for nsq",
   "main": "index.js",
   "scripts": {
