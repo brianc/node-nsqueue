@@ -154,7 +154,7 @@ _note:_ calling this on a message which has non-valid JSON contents will throw a
 
 Call this when you're done processing the message.  Tells the nsqd server process you have successfully finished processing this message.  The server will remove this message from the queue and not send it out to any more clients.
 
-Returns `true` if the response was sent to the nsqd server.  If the message has already been responded to -- it is no longer `.inFlight == true` -- then this is a no-op and returns false.`
+Returns `true` if the response was sent to the nsqd server.  If the message has already been responded to -- it is no longer `.inFlight == true` -- then this is a no-op and returns `false`.
 
 If there is an error finishing this message, the client will emit an `error` event.
 
@@ -166,7 +166,7 @@ __timeoutInMilliseconds: int__ millisecond timeout the nsqd server will wait bef
 
 Signals the nsqd server to requeue the message and deliver it again.  You usually call this if the message consumer has failed to process the message appropriately.
 
-Returns `true` if the response was sent to the nsqd server.  If the message has already been responded to -- it is no longer `.inFlight == true` -- then this is a no-op and returns false.
+Returns `true` if the response was sent to the nsqd server.  If the message has already been responded to -- it is no longer `.inFlight == true` -- then this is a no-op and returns `false`.
 
 If there is a problem requeuing this message, the client will emit an `error` event.
 
@@ -180,7 +180,7 @@ _note:_ currently the binary protocol does not communicate anything back in the 
 
 #### message.inFlight: bool
 
-Initially set to `true`. This will be set this to `false` after calling `message.finish()` or `message.requeu()`.
+Initially set to `true`. This will be set to `false` after calling `message.finish()` or `message.requeu()`.
 
 _note:_ it is currently considered an error for a client to respond to a message more than once, so calling `message.finish()` or `message.requeue()` more than once on a message will only send the `FIN` or `REQ` packet to the nsqd server __once__ for each message.  If you absolutely must send `FIN` or `REQ` twice (which will usually cause the nsqueue client to emit an error) then you have to manually toggle `message.inFlight = true` before calling `message.finish()` or `message.requeue()`
 again.
