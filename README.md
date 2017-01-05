@@ -7,6 +7,12 @@ Simple, well-tested node client for [nsqd](https://github.com/bitly/nsq).  nsloo
 ```sh
 $ npm install nsqueue
 ```
+## quick start
+
+- Download nsq and run it
+  - If you're using mac run `make download-osx`
+  - If you're using linux run `make download-linux`
+- After download you can test it by running `make test`
 
 ## example
 
