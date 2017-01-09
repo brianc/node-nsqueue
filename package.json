@@ -1,6 +1,6 @@
 {
   "name": "nsqueue",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "node.js client for nsq",
   "main": "index.js",
   "scripts": {
@@ -14,6 +14,6 @@
     "request": "~2.33.0"
   },
   "dependencies": {
-    "packet-reader": "0.0.0"
+    "packet-reader": "0.3.0"
   }
 }
